@@ -17,7 +17,7 @@
     <x-frontend.navbar />
 
     {{ $slot }}
-
+    <x-frontend.footer/>
 </body>
 
 </html>
