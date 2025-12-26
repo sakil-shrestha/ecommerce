@@ -19,6 +19,7 @@ class ProductController extends Controller
     public function productdetail($slug)
     {
         $product=Product::where('slug',$slug)->with('product_images')->first();
-        return view('frontend.productDetail', compact('product'));
+        $category=$product->category;
+        return view('frontend.productDetail', compact('product','category'));
     }
 }

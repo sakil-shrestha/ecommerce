@@ -4,6 +4,7 @@ use App\Http\Controllers\admin\CategoryController;
 
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\CompanyController;
+use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\CategoryController as FrontendCategoryController;
 use App\Http\Controllers\Frontend\ProductController as FrontendProductController;
 use App\Http\Controllers\Frontend\HomeController;
@@ -29,6 +30,11 @@ Route::get('products', [FrontendProductController::class, 'index'])->name('produ
 Route::get('products/{slug}', [FrontendProductController::class, 'productDetail'])->name('product.detail');
 
 
+//*********cart routes********
+Route::post('add-to-cart/{id}', [CartController::class, 'addToCart'])->name('add-to-cart');
+Route::get('cart', [CartController::class, 'cart'])->name('cart');
+Route::delete('cart/delete/{id}', [CartController::class, 'delete'])->name('cart.delete');
+
 //frontend category products route
 Route::get('category/{slug}', [FrontendCategoryController::class, 'categoryProducts'])->name('category.products');
 
@@ -39,7 +45,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::prefix('admin')->group(function () {
-
 
         //company routes for admin
         Route::resource('company', CompanyController::class);

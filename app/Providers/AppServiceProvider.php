@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Cart;
 use App\Models\Category;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -22,8 +23,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $categories=Category::all();
+        $cart=Cart::all();
         View::Share([
             'categories'=>$categories,
+            'cart'=>$cart,
         ]);
     }
 }

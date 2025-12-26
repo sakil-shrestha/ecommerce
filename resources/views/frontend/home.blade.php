@@ -102,26 +102,18 @@
 
 
     <!-- Categories -->
-    <section class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h3 class="text-4xl font-bold text-center mb-12">Latest Products</h3>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
 
-                    <a href="#">
-                        <div class="group cursor-pointer">
-                            <div class="bg-gray-200 border-2 border-dashed rounded-xl aspect-square overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                                    alt="Men"
-                                    class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
-                            </div>
-                            <h4 class="mt-4 text-xl font-semibold text-center">Tshirts</h4>
-                        </div>
-                    </a>
+                <div class="container mx-auto py-20 px-4 text-center">
+                    <h1 class="text-3xl mb-6 text-grey-600 font-semibold">Latest Products</h1>
+                    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                        @foreach ($products as $product)
+                            <x-frontend.product-card :product="$product" />
+                        @endforeach
+                    </div>
+                </div>
 
 
-            </div>
-        </div>
-    </section>
+
 
     <!-- Featured Products -->
     <section class="py-20 bg-gray-100">
@@ -250,7 +242,7 @@
         </div>
     </section>
 
-   
+
 
 
     <style>

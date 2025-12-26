@@ -13,7 +13,14 @@ class CategoryController extends Controller
     {
         $category=Category::where('slug',$slug)->first();
         $products=$category->products;
-        return $products;
+       
+        if($products->isEmpty())
+        {
+            return "No products found in this category.";
+        }
+        else{
+            return view('frontend.product',compact('products'));
+        }
 
     }
 }

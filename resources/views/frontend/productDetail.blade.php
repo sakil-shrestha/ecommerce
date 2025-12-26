@@ -3,7 +3,7 @@
     {{-- {{$product->product_images->first()->image_path}} --}}
     <section class="bg-gray-50 text-gray-800">
 
-        <div class="max-w-7xl mx-auto px-4 py-10">
+        <div class="max-w-7xl mx-auto px-4 pb-10 pt-20">
 
             <!-- PRODUCT SECTION -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -26,8 +26,8 @@
 
                 <!-- RIGHT: Product Info -->
                 <div>
-                    <span class="text-sm text-gray-500 uppercase">Electronics</span>
-                    <h1 class="text-3xl font-bold mt-2">Wireless Headphones Pro</h1>
+                    <span class="text-sm text-gray-500 uppercase">{{ $product->category->name }}</span>
+                    <h1 class="text-3xl font-bold mt-2">{{ $product->name }}</h1>
 
                     <!-- Rating -->
                     <div class="flex items-center gap-2 mt-3">
@@ -37,21 +37,26 @@
 
                     <!-- Price -->
                     <div class="mt-6">
-                        <span class="text-3xl font-bold">Rs. 4,999</span>
+                        <span class="text-3xl font-bold">Rs. {{ $product->price }}</span>
                         <span class="text-gray-500 line-through ml-3">Rs. 6,499</span>
                     </div>
 
                     <!-- Description -->
                     <p class="mt-6 text-gray-600 leading-relaxed">
-                        Premium noise-cancelling wireless headphones with crystal-clear sound,
-                        long battery life, and ultra-comfortable design.
+                        {{ $product->description }}
                     </p>
 
                     <!-- Actions -->
                     <div class="mt-8 flex gap-4">
-                        <button class="flex-1 bg-black text-white py-3 rounded-xl hover:bg-gray-900 transition">
-                            Add to Cart
-                        </button>
+                        <form action="{{ route('add-to-cart', $product->id) }}" method="POST">
+                            @csrf
+                            <input type="number" min="1" value="1" max="10"name="quantity"
+                                class="w-20 border rounded-xl px-4 py-3 text-center">
+                            <button type="submit"
+                                class="flex-1 bg-black text-white py-3 px-5 rounded-xl hover:bg-gray-900 transition">
+                                Add to Cart
+                            </button>
+                        </form>
                         <button class="flex-1 border border-black py-3 rounded-xl hover:bg-gray-100 transition">
                             Buy Now
                         </button>
@@ -81,43 +86,20 @@
             </div>
 
             <!-- RELATED PRODUCTS -->
-            <div class="mt-20">
-                <h2 class="text-2xl font-bold mb-8">Related Products</h2>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
 
                     <!-- Product Card -->
-                    <div class="bg-white rounded-2xl shadow-sm hover:shadow-lg transition overflow-hidden">
-                        <img src="{{ $product->product_images->first()->image_path }}" class="h-48 w-full object-cover">
-                        <div class="p-4">
-                            <h3 class="font-semibold">Bluetooth Speaker</h3>
-                            <p class="text-sm text-gray-500 mt-1">Rs. 2,999</p>
+                    <div class="container mx-auto py-20 px-4 text-center">
+                        <h1 class="text-3xl mb-6 text-grey-600 font-semibold">Related Products</h1>
+                        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                            @foreach ($category->products as $product)
+                                <x-frontend.product-card :product="$product" />
+                            @endforeach
                         </div>
                     </div>
 
-                    <div class="bg-white rounded-2xl shadow-sm hover:shadow-lg transition overflow-hidden">
-                        <img src="https://via.placeholder.com/300" class="h-48 w-full object-cover">
-                        <div class="p-4">
-                            <h3 class="font-semibold">Smart Watch</h3>
-                            <p class="text-sm text-gray-500 mt-1">Rs. 6,499</p>
-                        </div>
-                    </div>
 
-                    <div class="bg-white rounded-2xl shadow-sm hover:shadow-lg transition overflow-hidden">
-                        <img src="https://via.placeholder.com/300" class="h-48 w-full object-cover">
-                        <div class="p-4">
-                            <h3 class="font-semibold">Earbuds Mini</h3>
-                            <p class="text-sm text-gray-500 mt-1">Rs. 1,999</p>
-                        </div>
-                    </div>
 
-                    <div class="bg-white rounded-2xl shadow-sm hover:shadow-lg transition overflow-hidden">
-                        <img src="https://via.placeholder.com/300" class="h-48 w-full object-cover">
-                        <div class="p-4">
-                            <h3 class="font-semibold">Gaming Headset</h3>
-                            <p class="text-sm text-gray-500 mt-1">Rs. 3,499</p>
-                        </div>
-                    </div>
 
                 </div>
             </div>
