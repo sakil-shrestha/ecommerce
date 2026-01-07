@@ -10,6 +10,13 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Order extends Model
 {
 
+    protected $fillable=[
+        'user_id',
+        'address_id',
+        'total_amount',
+        'status',
+    ];
+
     public function order_items(): HasMany
     {
         return $this->hasMany(Order_item::class);

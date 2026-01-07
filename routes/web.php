@@ -1,14 +1,21 @@
 <?php
 
+
 use App\Http\Controllers\admin\CategoryController;
 
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\CompanyController;
+use App\Http\Controllers\Frontend\AddressController;
+use App\Http\Controllers\Frontend\Auth\ProfileController as AuthProfileController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\CategoryController as FrontendCategoryController;
 use App\Http\Controllers\Frontend\ProductController as FrontendProductController;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\OrderController;
+use App\Http\Controllers\Frontend\PaymentController;
+use App\Http\Controllers\Frontend\ReviewController;
 use App\Http\Controllers\ProfileController;
+
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -16,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 // });
 
 
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
@@ -24,25 +31,53 @@ Route::get('/', [HomeController::class, 'index']);
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
+// Route::get('/', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('home');
+Route::get('about', [HomeController::class, 'about'])->name('about');
+
 
 //*********frontend routes********
 Route::get('products', [FrontendProductController::class, 'index'])->name('product');
 Route::get('products/{slug}', [FrontendProductController::class, 'productDetail'])->name('product.detail');
 
 
-//*********cart routes********
-Route::post('add-to-cart/{id}', [CartController::class, 'addToCart'])->name('add-to-cart');
-Route::get('cart', [CartController::class, 'cart'])->name('cart');
-Route::delete('cart/delete/{id}', [CartController::class, 'delete'])->name('cart.delete');
 
 //frontend category products route
 Route::get('category/{slug}', [FrontendCategoryController::class, 'categoryProducts'])->name('category.products');
+
+//*********frontend profile routes(login system)********,
+// Route::get('/profile',[AuthProfileController::class,'login'])->name('profile.login');
+
+
+
+
 
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+
+    //*********cart routes********
+    Route::post('add-to-cart/{id}', [CartController::class, 'addToCart'])->name('add-to-cart');
+    Route::get('cart', [CartController::class, 'cart'])->name('cart');
+    Route::delete('cart/delete/{id}', [CartController::class, 'delete'])->name('cart.delete');
+
+    //*********order routes********
+    Route::get('/checkout',[OrderController::class,'checkout'])->name('checkout');
+    Route::post('/address',[AddressController::class,'store'])->name('address.store');
+    Route::put('/address/{id}',[AddressController::class,'update'])->name('address.update');
+    Route::delete('/address/{id}',[AddressController::class,'delete'])->name('address.delete');
+
+// ******Review routes********
+Route::post('/review/{product_id}',[ReviewController::class,'store'])->name('review.store');
+
+    // Route::get('/payment',[PaymentController::class,'payment'])->name('payment');
+    Route::get('/order',[OrderController::class,'order'])->name('order');
+    Route::get('/payment/callback',[OrderController::class,'paymentCallback']);
+
+
+
 
     Route::prefix('admin')->group(function () {
 
@@ -71,7 +106,6 @@ Route::middleware('auth')->group(function () {
         Route::post('product/store', [App\Http\Controllers\admin\ProductController::class, 'store'])->name('product.store');
         Route::get('product/edit/{id}', [App\Http\Controllers\admin\ProductController::class, 'edit'])->name('product.edit');
         Route::put('product/update/{id}', [App\Http\Controllers\admin\ProductController::class, 'update'])->name('product.update');
-
         Route::delete('product/delete/{id}', [App\Http\Controllers\admin\ProductController::class, 'destroy'])->name('product.destroy');
     });
 });

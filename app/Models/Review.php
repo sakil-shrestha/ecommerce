@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Review extends Model
 {
-    /**
-     * Get the user that owns the Review
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
+   protected $fillable = [
+        'product_id',
+        'user_id',
+        'rating',
+        'review',
+    ];
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

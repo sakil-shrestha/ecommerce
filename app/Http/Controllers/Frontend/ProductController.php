@@ -20,6 +20,7 @@ class ProductController extends Controller
     {
         $product=Product::where('slug',$slug)->with('product_images')->first();
         $category=$product->category;
+
         return view('frontend.productDetail', compact('product','category'));
     }
 }
