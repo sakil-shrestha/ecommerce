@@ -37,6 +37,7 @@ Route::get('about', [HomeController::class, 'about'])->name('about');
 
 //*********frontend routes********
 Route::get('products', [FrontendProductController::class, 'index'])->name('product');
+Route::get('products/search', [FrontendProductController::class, 'search'])->name('product.search');
 Route::get('products/{slug}', [FrontendProductController::class, 'productDetail'])->name('product.detail');
 
 
