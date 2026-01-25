@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -47,11 +48,12 @@ class User extends Authenticatable
         ];
     }
 
-    /**
-     * Get all of the addresses for the User
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
+    public function isAdmin()
+    {
+        return $this->role==='admin';
+    }
+
+
     public function addresses(): HasMany
     {
         return $this->hasMany(Address::class);
